@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Radar — pre-token protocols ranked by implied value</title>
+<link rel="stylesheet" href="radar.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="mark">◉</div>
+    <div>
+      <h1>Token Radar</h1>
+      <p class="tag">Every protocol that records no token yet, ranked by what its token would be worth if its record stayed as it is.</p>
+    </div>
+  </div>
+  <dl class="stats" id="stats"></dl>
+</header>
+
+<nav class="tabs" id="tabs">
+  <button type="button" data-tab="board" class="active">Pre-token board</button>
+  <button type="button" data-tab="live">Already trading</button>
+</nav>
+
+<section class="controls" id="controls">
+  <label class="search">Search
+    <input id="q" type="search" placeholder="Protocol name or slug…" autocomplete="off">
+  </label>
+  <label>Category
+    <select id="cat"><option value="all">All categories</option></select>
+  </label>
+  <label>Chain
+    <select id="chain"><option value="all">All chains</option></select>
+  </label>
+  <label class="check"><input id="watch" type="checkbox"> Watchlist only</label>
+  <span class="count" id="count"></span>
+</section>
+
+<main>
+  <section id="detail" class="detail" hidden></section>
+  <div class="tablewrap">
+    <table id="board">
+      <thead>
+        <tr>
+          <th data-sort="rank" class="num">#</th>
+          <th data-sort="name">Protocol</th>
+          <th data-sort="category">Category</th>
+          <th>Chains</th>
+          <th data-sort="tvl_usd" class="num">TVL</th>
+          <th data-sort="change_7d" class="num">7d</th>
+          <th data-sort="age_days" class="num">Age</th>
+          <th data-sort="implied_value_usd" class="num">Implied value</th>
+        </tr>
+      </thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <p class="empty" id="empty" hidden>No protocol matches this filter.</p>
+  </div>
+</main>
+
+<section class="model">
+  <h2>How the radar scores</h2>
+  <p>Implied value = TVL × 0.22 × growth × maturity × breadth. Growth clamps the 7-day TVL change to −50…+100% and weighs it at 0.6. Maturity rises with how long the protocol has run with no token (0.5 at day zero, 1.0 at four years; 270 days when the listing date is unknown). Breadth adds 4% per extra chain, capped at four. Every figure comes from the snapshot itself — no name is ever special-cased.</p>
+  <p>“Pre-token” means the protocol’s record carries no token: no market cap, no CoinGecko id, no symbol. That is the record speaking, not proof it has none. The watchlist is the 40 protocols at or above the $50M floor; the board adds every other pre-token protocol it can score, 158 more, because the floor is never the whole board. Wrapped, staked and bridged products of tokens that already trade are left out of the ranking entirely — a staked-ETH product is not a launch waiting to happen. Protocols whose token already trades sit on the second tab at the market’s own value.</p>
+  <p class="note">Implied value is this radar’s own claim about a token that may never exist. It is not a prediction of whether or when a token is issued, and never financial advice. Farm plans are a starting point: check the protocol’s own page before you put money anywhere.</p>
+</section>
+
+<footer id="foot"></footer>
+<script src="../data.js"></script>
+<script src="radar.js"></script>
+</body>
+</html>
